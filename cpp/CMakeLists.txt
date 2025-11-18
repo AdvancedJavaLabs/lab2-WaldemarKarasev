@@ -12,8 +12,17 @@ add_subdirectory(common)
 
 
 add_executable(producer
+    producer/job_factory.cpp
     producer/main.cpp
 )
 target_include_directories(producer PUBLIC ${CMAKE_SOURCE_DIR})
-message("lib name: ${TEXT_RPOCESSOR_LIB}")
 target_link_libraries(producer common-func)
+
+add_executable(worker
+    worker/main.cpp
+    worker/worker.cpp
+)
+target_include_directories(worker PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(worker common-func)
+
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

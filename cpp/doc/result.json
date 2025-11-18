@@ -1,11 +1,18 @@
 {
-    "task_id" : 0,
+    "id" : 0,
     "section_id" : 1,
     "result" : {
         "word_count" : 10,
         "top_words" : [
-            {"hello" : 10},
-            {"world" : 2}
+            {
+                "word" : "hello",
+                "count" : 10
+            },
+            {
+                "word" : "world",
+                "count" : 2
+            }
         ]
-    }
+    },
+    "data" : "Text data"
 }

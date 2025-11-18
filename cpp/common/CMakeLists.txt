@@ -27,6 +27,7 @@ add_library(common-func
     rabbitmq_client.cpp
     message.cpp
     text_processor.cpp
+    thread_pool/thread_pool.cpp
 )
 
 target_link_libraries(common-func PUBLIC SimpleAmqpClient nlohmann_json)
