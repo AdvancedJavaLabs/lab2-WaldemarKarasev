@@ -1,6 +1,6 @@
 #include "rabbitmq_client.hpp"
 
-namespace tp::client {
+namespace tp {
     
 RabbitClient::RabbitClient(std::string host, std::string username, std::string password, int port)
 {
@@ -43,27 +43,24 @@ std::optional<RabbitClient::Message> RabbitClient::GetFromQueue(const std::strin
     msg.body = nlohmann::json::parse(env->Message()->Body());
     msg.exchange = env->Exchange();
     msg.routing_key = env->RoutingKey();
-    // auto [delivery_tag, delivery_channel] = env->GetDeliveryInfo();
-    // msg.delivery_tag = delivery_tag;
-    // msg.delivery_channel = delivery_channel;
-
-    msg.delivery_tag = env->GetDeliveryInfo().delivery_tag;
-    msg.delivery_channel = env->GetDeliveryInfo().delivery_channel;
-
+    
+    // getting delivery info
+    msg.delivery = {
+        env->GetDeliveryInfo().delivery_tag
+        , env->GetDeliveryInfo().delivery_channel
+    };
 
     return msg;
 }
 
-void RabbitClient::Ack(uint64_t delivery_tag, uint16_t delivery_channel)
+void RabbitClient::Ack(utils::DeliveryInfo del_info)
 {
-    channel_->BasicAck({delivery_tag, delivery_channel});
+    channel_->BasicAck({del_info.tag, del_info.channel});
 }
 
-void RabbitClient::Reject(uint64_t delivery_tag, uint16_t delivery_channel, bool requeue)
+void RabbitClient::Reject(utils::DeliveryInfo del_info, bool requeue)
 {
-    channel_->BasicReject({delivery_tag, delivery_channel}, requeue);
+    channel_->BasicReject({del_info.tag, del_info.channel}, requeue);
 }
 
-
-
-} // namespace tp::client
+} // namespace tp

@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(simpleamqp)
 add_library(common-func 
     rabbitmq_client.cpp
     message.cpp
-    text_processor.cpp
+    text_utils.cpp
     thread_pool/thread_pool.cpp
 )
 

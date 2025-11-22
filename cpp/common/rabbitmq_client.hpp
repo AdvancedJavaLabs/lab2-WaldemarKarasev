@@ -11,18 +11,22 @@
 // nlohmann_json
 #include <nlohmann/json.hpp>
 
-namespace tp::client {
+//
+#include "utils.hpp"
+
+namespace tp {
     
 class RabbitClient
 {
 public:
+
+
     struct Message
     {
         nlohmann::json body;
         std::string exchange;
         std::string routing_key;
-        uint64_t delivery_tag;
-        uint16_t delivery_channel;
+        utils::DeliveryInfo delivery;
     };
 
 public:
@@ -39,8 +43,8 @@ public:
     std::optional<Message> GetFromQueue(const std::string& queue_name
                                         , bool auto_ack = false);
 
-    void Ack(uint64_t delivery_tag, uint16_t delivery_channel);
-    void Reject(uint64_t delivery_tag, uint16_t delivery_channel, bool requeue);
+    void Ack(utils::DeliveryInfo del_info);
+    void Reject(utils::DeliveryInfo del_info, bool requeue);
 
     
     static std::string GetTaskQueueName() { return "task_queue"; }
@@ -52,4 +56,4 @@ private:
 
 };
 
-} // namespace tp::client
+} // namespace tp

@@ -9,7 +9,7 @@
 
 namespace producer
 {
-
+#if 0
 static std::string generate_job_id_str()
 {
     std::random_device rd;
@@ -23,8 +23,8 @@ static std::string generate_job_id_str()
     stream << dist(gen);
 
     return stream.str(); 
-    
 }
+#endif
 
 static int generate_job_id()
 {
@@ -62,7 +62,7 @@ JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size
 
         if (lines_in_chunk >= chunk_size)
         {
-            jobs.push_back(tp::message::Task{job_id, section_id++, current_chunk.str(), {}});
+            jobs.push_back(job_type{job_id, section_id++, current_chunk.str(), {}});
             current_chunk.clear();
             lines_in_chunk = 0;
         }
@@ -70,7 +70,7 @@ JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size
 
     if (lines_in_chunk > 0)
     {
-        jobs.push_back(tp::message::Task{job_id, section_id++, current_chunk.str(), {}});
+        jobs.push_back(job_type{job_id, section_id++, current_chunk.str(), {}});
         current_chunk.clear();
         lines_in_chunk = 0;
     }

@@ -2,5 +2,5 @@
 
 int main()
 {
-    return tp::Worker{}.Run();
+    return worker::App{}.Run();
 }

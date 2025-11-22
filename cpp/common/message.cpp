@@ -1,6 +1,6 @@
 #include "message.hpp"
 
-namespace tp::message {
+namespace tp {
 
 // utility functions
 json_type TaskOption::to_json(const TaskOption& task_option)
@@ -83,4 +83,4 @@ Result Result::from_json(const nlohmann::json& j_result)
 }
 
 
-} // namespace tp::message
+} // namespace tp

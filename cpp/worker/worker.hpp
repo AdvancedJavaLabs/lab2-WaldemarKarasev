@@ -3,30 +3,25 @@
 #include <common/thread_pool/result_queue.hpp>
 #include <common/thread_pool/thread_pool.hpp>
 #include <common/rabbitmq_client.hpp>
-#include <common/message.hpp>
-namespace tp
-{
 
-class Worker
+#include "work.hpp"
+
+namespace worker {
+
+class App
 {
 public:
-    struct Result
-    {
-        bool succeeded = false;
-        client::RabbitClient::Message msg; // to ack or reject failed task
-        message::Result result;
-    };
 
 public:
-    Worker();
+    App();
     int Run();
 
 private:
-    exe::ThreadPool pool_;
-    client::RabbitClient client_;
-    exe::ResultQueue<Result> results_{};
+    tp::exe::ThreadPool pool_;
+    tp::RabbitClient client_;
+    tp::exe::ResultQueue<Work::Result> results_{};
     bool stop_flag_ = false;
 };
     
-} 
+} // namespace worker
 

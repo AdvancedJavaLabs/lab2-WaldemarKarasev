@@ -7,7 +7,7 @@
 // nlohmann_json
 #include <nlohmann/json.hpp>
 
-namespace tp::message {
+namespace tp {
 
 using json_type = nlohmann::ordered_json;
 
@@ -36,17 +36,31 @@ struct Task
 
 struct Result
 {
-    int id;
-    int section_id;
+    Result() = default;
+    Result(const Task& task)
+        : id{task.id}
+        , section_id{task.section_id} {}
+
+    int id{};
+    int section_id{};
     std::string data;
 
     // data
-    int word_count;
+    int word_count{};
     std::vector<std::pair<std::string, int>> top_words;
 
     // utils functions
     static json_type to_json(const Result& result);
     static Result from_json(const nlohmann::json& result);
 };
-    
-} // namespace tp::message
+
+
+struct JobStatus
+{
+    bool init = false;
+    int sections_count{};
+    int received_sections{};
+    std::vector<Result> sections_;
+};
+
+} // namespace tp

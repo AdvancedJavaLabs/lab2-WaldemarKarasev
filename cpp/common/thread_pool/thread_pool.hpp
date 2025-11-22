@@ -14,6 +14,7 @@ namespace tp::exe
 
 class ThreadPool
 {
+public:
     using Task = std::function<void()>;
 
 public:
