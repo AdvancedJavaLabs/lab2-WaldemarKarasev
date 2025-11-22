@@ -1,0 +1,10 @@
+{
+    "id" : 0,
+    "section_id" : 1,
+    "data" : "Text example",
+    "option" : {
+        "w_count" : true,
+        "top" : true,
+        "top_n" : 3
+    }
+}
