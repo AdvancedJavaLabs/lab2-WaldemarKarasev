@@ -12,7 +12,11 @@
 
 namespace aggregator {
 
-using MergeTable = std::unordered_map<int, std::pair<std::mutex, tp::JobStatus>>;
+struct MergeTable
+{
+    std::unordered_map<int, tp::JobStatus> table_;
+    std::mutex table_mutex_;
+};
 
 class MergeTool : public tp::exe::ITask
 {
@@ -39,6 +43,9 @@ public:
 
 protected:
     virtual void Run() override;
+
+private:
+    Result MergeJobStatus(tp::JobStatus job_status);
 
 private:
     DeliveryInfoType del_info_;

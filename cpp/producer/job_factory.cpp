@@ -58,21 +58,48 @@ JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size
     while (std::getline(file, line))
     {
         current_chunk << line << "\n";
+        // std::cout << "line:" << line << std::endl;
         lines_in_chunk++;
 
         if (lines_in_chunk >= chunk_size)
         {
-            jobs.push_back(job_type{job_id, section_id++, current_chunk.str(), {}});
+            // std::cout << "current_chunk:" << current_chunk.str() << std::endl;
+            jobs.push_back(job_type{
+                job_id
+                , section_id++
+                , 0
+                , filename.filename()
+                , current_chunk.str()
+                , tp::TaskOption{}
+            });
+            
+            current_chunk.str("");
             current_chunk.clear();
+            // line.clear();
             lines_in_chunk = 0;
         }
     }
 
     if (lines_in_chunk > 0)
     {
-        jobs.push_back(job_type{job_id, section_id++, current_chunk.str(), {}});
+        jobs.push_back(job_type{
+                job_id
+                , section_id++
+                , 0
+                , filename
+                , current_chunk.str()
+                , tp::TaskOption{}
+            });
         current_chunk.clear();
         lines_in_chunk = 0;
+    }
+
+    // setting up sections count for each job
+    int size = jobs.size();
+    for (auto& job : jobs)
+    {
+        job.sections_count = size;
+        // std::cout << tp::Task::to_json(job).dump(4) << std::endl;
     }
 
     return jobs;

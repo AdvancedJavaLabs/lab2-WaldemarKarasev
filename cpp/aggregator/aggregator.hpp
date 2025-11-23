@@ -8,6 +8,7 @@
 #include <common/thread_pool/thread_pool.hpp>
 #include <common/rabbitmq_client.hpp>
 #include <common/thread_pool/result_queue.hpp>
+#include <common/app.hpp>
 
 //
 #include "merge_tool.hpp"
@@ -15,14 +16,17 @@
 
 namespace aggregator {
 
-class App
+class App final : public tp::RabbitApp
 {
 public:
-    int Run();
+    App();
+
+private:
+    virtual void ResultProcessing(tp::RabbitClient& client) override;
+    virtual void MessageProcessing(tp::RabbitClient::Message message) override;
 
 private:
     tp::exe::ThreadPool pool_;
-    tp::RabbitClient client_;
     MergeTable merge_table_;
     tp::exe::ResultQueue<MergeTool::Responce> responce_queue_;
     tp::exe::ResultQueue<MergeTool::Result> result_queue_;

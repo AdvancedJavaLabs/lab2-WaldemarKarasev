@@ -11,47 +11,39 @@
 namespace worker {
 
 App::App()
-    : pool_{std::thread::hardware_concurrency()}
-    , client_{} {}
+    : tp::RabbitApp{tp::RabbitClient::GetTaskQueueName(), tp::RabbitClient::GetAggregatorQueueName()}
+    , pool_{std::thread::hardware_concurrency()} {}
 
-int App::Run()
+void App::ResultProcessing(tp::RabbitClient& client)
 {
-    while (not stop_flag_)
+    Work::Result result;
+    while (results_.TryPop(result))
     {
-        std::cout << "===============================" << std::endl;
-        auto message = client_.GetFromQueue(tp::RabbitClient::GetTaskQueueName());
-        if (not message.has_value())
+        if (result.succeeded)
         {
-            Work::Result result;
-            while (results_.TryPop(result))
-            {
-                if (result.succeeded)
-                {
-                    client_.Ack(result.del_info);
-                    client_.PublishToQueue(tp::RabbitClient::GetAggregatorQueueName(), tp::Result::to_json(result.result));
-                }
-                else
-                {
-                    client_.Reject(result.del_info, true);
-                }
-            }
-            std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-            continue;
+            client.Ack(result.del_info);
+            client.PublishToQueue(tp::RabbitClient::GetAggregatorQueueName(), tp::Result::to_json(result.result));
         }
-        std::cout << "!" << std::endl;
-
-        Work work{
-            message.value().delivery
-            , tp::Task::from_json(message.value().body)
-            , results_
-        };
-        std::cout << "!!" << std::endl;
-
-        tp::exe::Submit(pool_, work);
+        else
+        {
+            client.Reject(result.del_info, true);
+        }
     }
-
-    return 0;
 }
+
+void App::MessageProcessing(tp::RabbitClient::Message msg)
+{
+    std::cout << "!" << std::endl;
+    Work work{
+        msg.delivery
+        , tp::Task::from_json(msg.body)
+        , results_
+    };
+    std::cout << "!!" << std::endl;
+
+    tp::exe::Submit(pool_, work);
+}
+
     
 } // namespace worker
 

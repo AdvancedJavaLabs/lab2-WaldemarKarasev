@@ -1,5 +1,8 @@
 #include "message.hpp"
 
+// std
+#include <iostream>
+
 namespace tp {
 
 // utility functions
@@ -26,6 +29,8 @@ json_type Task::to_json(const Task& task)
     json_type j_task;
     j_task["id"] = task.id;
     j_task["section_id"] = task.section_id;
+    j_task["sections_count"] = task.sections_count;
+    j_task["file"] = task.filename;
     j_task["data"] = task.data;
     j_task["option"] = TaskOption::to_json(task.option);
     return j_task;
@@ -35,17 +40,35 @@ Task Task::from_json(const nlohmann::json& j_task)
 {
     Task task;
     task.id = j_task["id"]; 
-    task.section_id = j_task["section_id"]; 
+    task.section_id = j_task["section_id"];
+    task.sections_count = j_task["sections_count"];
+    task.filename = j_task["file"];
     task.data = j_task["data"]; 
     task.option = TaskOption::from_json(j_task["option"]); 
     return task;
 }
 
-json_type Result::to_json(const Result& result)
+Result Result::merge(const std::vector<Result>& sections)
+{
+    Result merged_result;
+    merged_result.id =sections.front().id;
+    merged_result.filename = sections.front().filename;
+
+    for (const auto& result : sections)
+    {
+        merged_result.data.append(result.data);
+    }
+
+    return merged_result;
+}
+
+json_type Result::to_statistic_json(const Result& result)
 {
     json_type j_result;
     j_result["id"] = result.id;
     j_result["section_id"] = result.section_id;
+    j_result["sections_count"] = result.sections_count;
+    j_result["file"] = result.filename;
 
     json_type j_results;
     j_results["word_count"] = result.word_count;
@@ -61,8 +84,14 @@ json_type Result::to_json(const Result& result)
         j_results["top_words"] = top_arr;
     }
     j_result["result"] = j_results;
-    j_result["data"] = result.data;
 
+    return j_result;
+}
+
+json_type Result::to_json(const Result& result)
+{
+    json_type j_result = to_statistic_json(result);
+    j_result["data"] = result.data;
     return j_result;
 }
 
@@ -71,6 +100,9 @@ Result Result::from_json(const nlohmann::json& j_result)
     Result result;
     result.id = j_result["id"];
     result.section_id = j_result["section_id"];
+    result.sections_count = j_result["sections_count"];
+    result.filename = j_result["file"];
+
     result.word_count = j_result["result"]["word_count"];
 
     for (const nlohmann::json& obj : j_result["result"]["top_words"])

@@ -24,6 +24,8 @@ void Work::Run()
     
     {
         tp::Result task_result(task_);
+        // std::cout << tp::Result::to_json(task_result).dump(4) << std::endl;
+        task_result.data = std::move(task_.data);
         work_result.result = std::move(task_result);
     }
     
