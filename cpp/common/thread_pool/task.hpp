@@ -12,11 +12,11 @@ struct ITask
 public:
     ITask()
     {
-        std::cout << "ITask()" << std::endl;
+        // std::cout << "ITask()" << std::endl;
     }
     virtual ~ITask()
     {
-        std::cout << "~ITask()" << std::endl;
+        // std::cout << "~ITask()" << std::endl;
     } 
     virtual void operator()()
     {

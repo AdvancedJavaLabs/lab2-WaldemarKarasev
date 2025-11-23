@@ -1,47 +1,27 @@
 #include "work.hpp"
 
+#include <common/text_processor.hpp>
+
 namespace worker {
 
 Work::Work(DeliveryInfoType del_info, Task task, ResultQueue& queue)
     : task_{std::move(task)}
     , del_info_{std::move(del_info)}
-    , result_queue_{queue} 
-    {
-        std::cout << "Work()" << std::endl;
-    }
+    , result_queue_{queue} {}
 
-Work::~Work()
-{
-    std::cout << "~Work()" << std::endl;
-}
+Work::~Work() {}
 
 void Work::Run()
 {
-    
+    tp::TextProcessor processor{std::move(task_), {"good"}, {"bad"}};
+
     Result work_result;
     work_result.succeeded = true;
     work_result.del_info = del_info_;
+    work_result.result = processor.ProcessText();
     
-    {
-        tp::Result task_result(task_);
-        // std::cout << tp::Result::to_json(task_result).dump(4) << std::endl;
-        task_result.data = std::move(task_.data);
-        work_result.result = std::move(task_result);
-    }
-    
-    
-    // text processing
-    // ...
-    
-    
-    std::cout << "Work ended: " << "id:" << task_.id << "; section_id:" << task_.section_id << std::endl;
+    std::cout << "Work ended: " << "id:" << work_result.result.id << "; section_id:" << work_result.result.section_id << std::endl;
     result_queue_.Push(std::move(work_result));
 }
-
-// private:
-//     Task task;
-//     DeliveryInfoType delivery_info;
-//     ResultQueue& queue;
-// };
 
 } // namespace worker

@@ -17,7 +17,7 @@ public:
     using jobs_type = std::vector<job_type>;
 
 public:
-    static jobs_type CreateJob(std::filesystem::path filename, size_t chunk_size);
+    static jobs_type CreateJob(std::filesystem::path config_filename, std::filesystem::path filename, size_t chunk_size);
 };
 
 } // namespace producer

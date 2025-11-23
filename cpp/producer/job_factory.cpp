@@ -31,16 +31,49 @@ static int generate_job_id()
     return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();    
 }
 
-JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size_t chunk_size)
+tp::TaskOption ReadOptions(std::filesystem::path config_filename)
+{
+    tp::TaskOption options{};
+
+
+    std::ifstream file(config_filename);
+    if (!file.is_open())
+    {
+        std::cerr << "Unable read config file:" << config_filename << std::endl;
+        return options;
+    }
+
+    tp::json_type config;
+    file >> config;
+
+    std::cout << "Config:" << config.dump(4) << std::endl;
+    
+    options.count_word = config["count_word"];
+    options.top_words = config["top_words"];
+    options.top_n = config["top_n"];
+
+    options.sentiment = config["sentiment"];
+    options.modify_text = config["modify_text"];
+    options.mask = config["mask"];
+    options.sort_sentences = config["sort_sentences"];
+
+    return options;
+}
+
+JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path config_filename, std::filesystem::path filename, size_t chunk_size)
 {
     // for (int i = 0; i < 100; ++i)
     // {
     //     std::cout << generate_job_id() << std::endl;
     // }
     // std::abort();
+
+    if (chunk_size <= 0) chunk_size = 1;
+
     int job_id = generate_job_id();
-    
     std::cout << "job_id:" << job_id << std::endl;
+
+    tp::TaskOption task_option = ReadOptions(config_filename);
 
     std::ifstream file(filename);
     if (!file.is_open())
@@ -54,7 +87,7 @@ JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size
     std::string line;
     size_t lines_in_chunk = 0;
     int section_id = 0;
-
+    std::cout << "filename:" << filename.filename() << std::endl;
     while (std::getline(file, line))
     {
         current_chunk << line << "\n";
@@ -70,7 +103,7 @@ JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size
                 , 0
                 , filename.filename()
                 , current_chunk.str()
-                , tp::TaskOption{}
+                , task_option
             });
             
             current_chunk.str("");
@@ -86,9 +119,9 @@ JobFactory::jobs_type JobFactory::CreateJob(std::filesystem::path filename, size
                 job_id
                 , section_id++
                 , 0
-                , filename
+                , filename.filename()
                 , current_chunk.str()
-                , tp::TaskOption{}
+                , task_option
             });
         current_chunk.clear();
         lines_in_chunk = 0;

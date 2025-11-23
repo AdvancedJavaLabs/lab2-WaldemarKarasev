@@ -11,19 +11,20 @@ int main(int argc, char const *argv[])
 {
     try
     {
-        if (argc < 3)
+        if (argc < 4)
         {
 
-            std::cout << "Usage: " << argv[0] << " <filename> <chunk_size>" << std::endl;
+            std::cout << "Usage: " << argv[0] << "<config> <filename> <chunk_size>" << std::endl;
             return 1;
         }
 
-        std::filesystem::path file = argv[1];
-        size_t chunk_size = std::stoul(argv[2]);
-        std::cout << "file:" << file << "; chunk_size:" << chunk_size << std::endl;
+        std::filesystem::path config_file = argv[1];
+        std::filesystem::path file = argv[2];
+        size_t chunk_size = std::stoul(argv[3]);
+        std::cout << "config_file:" << config_file  << "; file:" << file << "; chunk_size:" << chunk_size << std::endl;
 
         // generating jobs
-        auto jobs = producer::JobFactory::CreateJob(file, chunk_size);
+        auto jobs = producer::JobFactory::CreateJob(config_file, file, chunk_size);
         
         if (jobs.empty())
         {

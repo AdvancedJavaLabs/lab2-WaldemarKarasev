@@ -39,6 +39,7 @@ void JobReporter::Run()
         }
     }
 
+    if (!result_.text_analysis_result.modified_text.empty())
     {
         // printing file data into new file
         std::filesystem::path filename = dir / std::filesystem::path(result_.filename + ".changed");
@@ -46,12 +47,16 @@ void JobReporter::Run()
         std::ofstream file(filename);
         if (file.is_open())
         {
-            file << result_.data;
+            file << result_.text_analysis_result.modified_text;
         }
         else
         {
             std::cout << "failed to open: " << filename.string() << std::endl;
         }
+    }
+    else
+    {
+        std::cout << "modified text is empty" << std::endl;
     }
 }
 
