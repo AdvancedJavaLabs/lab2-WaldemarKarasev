@@ -33,13 +33,13 @@ void App::ResultProcessing(tp::RabbitClient& client)
 
 void App::MessageProcessing(tp::RabbitClient::Message msg)
 {
-    std::cout << "!" << std::endl;
+    // std::cout << "!" << std::endl;
     Work work{
         msg.delivery
         , tp::Task::from_json(msg.body)
         , results_
     };
-    std::cout << "!!" << std::endl;
+    // std::cout << "!!" << std::endl;
 
     tp::exe::Submit(pool_, work);
 }

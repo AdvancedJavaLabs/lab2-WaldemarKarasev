@@ -46,12 +46,12 @@ Result TextProcessor::ProcessText()
 
     if (task_.option.modify_text)
     {
-        text_stats.modified_text = MaskNames(task_.data, task_.option.mask);
+        // text_stats.modified_text = MaskNames(task_.data, task_.option.mask);
     }
 
     if (task_.option.sort_sentences)
     {
-        text_stats.sorted_sentences = SortSentencesByLength(task_.data);
+        // text_stats.sorted_sentences = SortSentencesByLength(task_.data);
     }
 
     std::string text_data = std::move(task_.data);

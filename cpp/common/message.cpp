@@ -80,7 +80,7 @@ SentimentStats SentimentStats::from_json(const json_type& j_stats)
 }
 
 
-json_type TextAnalysisResult::to_json(const TextAnalysisResult& text_stats)
+json_type TextAnalysisResult::to_json(const TextAnalysisResult& text_stats, bool add_text)
 {
     json_type j_text_stats;
 
@@ -106,6 +106,7 @@ json_type TextAnalysisResult::to_json(const TextAnalysisResult& text_stats)
     }
 
     // modified text
+    if (add_text)
     {
         j_text_stats["modified_text"] = text_stats.modified_text;
     }

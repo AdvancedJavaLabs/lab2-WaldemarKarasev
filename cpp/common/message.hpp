@@ -106,7 +106,7 @@ struct TextAnalysisResult
     std::string modified_text;
     std::vector<std::string> sorted_sentences;
 
-    static json_type to_json(const TextAnalysisResult& text_stats);
+    static json_type to_json(const TextAnalysisResult& text_stats, bool add_text = true);
     static TextAnalysisResult from_json(const nlohmann::json& j_text_stats);
 };
 

@@ -30,7 +30,12 @@ void JobReporter::Run()
 
         if (file.is_open())
         {
-            tp::json_type statictics = tp::Result::to_statistic_json(result_);
+            tp::json_type statictics;
+            statictics["id"] = result_.id;
+            statictics["section_id"] = result_.section_id;
+            statictics["sections_count"] = result_.sections_count;
+            statictics["file"] = result_.filename;
+            statictics["stats"] = tp::TextAnalysisResult::to_json(result_.text_analysis_result, false);
             file << statictics.dump(4);
         }
         else

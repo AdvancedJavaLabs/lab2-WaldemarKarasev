@@ -9,7 +9,7 @@ namespace tp::exe
 template <typename Task>    
 void Submit(ThreadPool& pool, Task&& task)
 {
-    std::cout << "Submit" << std::endl;
+    // std::cout << "Submit" << std::endl;
     pool.EnqueueTask(task);
 }
 

@@ -18,7 +18,7 @@ int RabbitApp::Run()
         int responce_wait_count = 0;
         while (!stop_flag_)
         {
-            std::cout << "===============================" << std::endl;
+            // std::cout << "===============================" << std::endl;
             auto message = client_.GetFromQueue(read_queue_name_);
             if (not message.has_value() || responce_wait_count > 40)
             {
