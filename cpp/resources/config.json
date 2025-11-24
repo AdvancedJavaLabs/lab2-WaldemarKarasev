@@ -1,0 +1,15 @@
+{
+    "count_word" : true,
+    
+    "top_words" : true,
+    "top_n" : 3,
+
+    "sentiment" : true,
+
+    "modify_text" : true,
+    "mask" : "line",
+
+    "sort_sentences" : false,
+
+    "chunk_type" : "sentences"
+}
