@@ -8,8 +8,8 @@
 
 namespace aggregator {
     
-App::App()
-    : tp::RabbitApp(tp::RabbitClient::GetAggregatorQueueName(), {}) {}
+App::App(size_t prefetch_count)
+    : tp::RabbitApp(prefetch_count, tp::RabbitClient::GetAggregatorQueueName(), "") {}
 
 
 void App::ResultProcessing(tp::RabbitClient& client)
@@ -57,6 +57,14 @@ void App::MessageProcessing(tp::RabbitClient::Message msg)
     };
     std::cout << "WorK SUBMITTED: " << "id:" << result.id << "; section_id:" << result.section_id << std::endl;
     tp::exe::Submit(pool_, work);
+}
+
+void App::MessageProcessing(std::vector<tp::RabbitClient::Message> messages)
+{
+    for (auto& message : messages)
+    {
+        MessageProcessing(std::move(message));
+    }
 }
 
 } // namespace aggregator

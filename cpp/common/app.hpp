@@ -13,12 +13,13 @@ namespace tp
 class RabbitApp
 {
 public:
-    RabbitApp(std::string read_queue, std::string write_queue);
+    RabbitApp(size_t prefetch_count, std::string read_queue, std::string write_queue);
     int Run();
 
 protected:
     virtual void ResultProcessing(RabbitClient& client) = 0;
     virtual void MessageProcessing(RabbitClient::Message mgs) = 0;
+    virtual void MessageProcessing(std::vector<RabbitClient::Message> mgs) = 0;
 
 
 private:
@@ -26,6 +27,7 @@ private:
     std::string read_queue_name_;
     std::string write_queue_name_;
     RabbitClient client_;
+    size_t prefetch_count_;
 };
 
 } // namespace tp

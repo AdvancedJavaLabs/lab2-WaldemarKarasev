@@ -14,11 +14,12 @@ class App final : public tp::RabbitApp
 public:
 
 public:
-    App();
+    App(size_t prefetch_count);
     
 private:
     virtual void ResultProcessing(tp::RabbitClient& client) override;
     virtual void MessageProcessing(tp::RabbitClient::Message message) override;
+    virtual void MessageProcessing(std::vector<tp::RabbitClient::Message> mgs) override;
 
 private:
     tp::exe::ThreadPool pool_;

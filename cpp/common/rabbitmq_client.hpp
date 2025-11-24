@@ -20,7 +20,6 @@ class RabbitClient
 {
 public:
 
-
     struct Message
     {
         nlohmann::json body;
@@ -42,6 +41,15 @@ public:
 
     std::optional<Message> GetFromQueue(const std::string& queue_name
                                         , bool auto_ack = false);
+
+    std::string Subscribe(const std::string& queue_name, size_t prefetch_count, bool auto_ack = false);
+
+    void Cancel(const std::string& consumer_tag);
+
+    std::optional<Message> ConsumeOne(const std::string& consumer_tag, int timeout_ms = 100);
+
+    std::vector<Message> ConsumeBatch(const std::string& consumer_tag, size_t max_messages, int timeout_ms = 100);
+
 
     void Ack(utils::DeliveryInfo del_info);
     void Reject(utils::DeliveryInfo del_info, bool requeue);

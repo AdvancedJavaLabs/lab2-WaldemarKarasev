@@ -1,6 +1,8 @@
 #include "aggregator.hpp"
 
+#include <thread>
+
 int main()
 {
-    return aggregator::App{}.Run();
+    return aggregator::App{std::thread::hardware_concurrency() * 4}.Run();
 }

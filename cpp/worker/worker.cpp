@@ -10,23 +10,27 @@
 
 namespace worker {
 
-App::App()
-    : tp::RabbitApp{tp::RabbitClient::GetTaskQueueName(), tp::RabbitClient::GetAggregatorQueueName()}
+App::App(size_t prefetch_count)
+    : tp::RabbitApp{prefetch_count, tp::RabbitClient::GetTaskQueueName(), tp::RabbitClient::GetAggregatorQueueName()}
     , pool_{std::thread::hardware_concurrency()} {}
 
 void App::ResultProcessing(tp::RabbitClient& client)
 {
-    Work::Result result;
-    while (results_.TryPop(result))
+    std::vector<Work::Result> results_vec;
+    while (results_.TryPop(results_vec))
     {
-        if (result.succeeded)
+        for (const auto& result : results_vec)
         {
-            client.Ack(result.del_info);
-            client.PublishToQueue(tp::RabbitClient::GetAggregatorQueueName(), tp::Result::to_json(result.result));
-        }
-        else
-        {
-            client.Reject(result.del_info, true);
+            std::cout << "Ready results:" << results_vec.size() << std::endl;
+            if (result.succeeded)
+            {
+                client.Ack(result.del_info);
+                client.PublishToQueue(tp::RabbitClient::GetAggregatorQueueName(), tp::Result::to_json(result.result));
+            }
+            else
+            {
+                client.Reject(result.del_info, true);
+            }
         }
     }
 }
@@ -44,6 +48,13 @@ void App::MessageProcessing(tp::RabbitClient::Message msg)
     tp::exe::Submit(pool_, work);
 }
 
+void App::MessageProcessing(std::vector<tp::RabbitClient::Message> messages)
+{
+    for (auto& message : messages)
+    {
+        MessageProcessing(std::move(message));
+    }
+}
     
 } // namespace worker
 
