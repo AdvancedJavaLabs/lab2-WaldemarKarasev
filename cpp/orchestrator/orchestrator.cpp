@@ -158,12 +158,12 @@ void Orchestrator::MessageProcessing(std::vector<tp::RabbitClient::Message> mess
         {
             if (metric.tag != tp::Metric::Tag::END)
             {
-                metric.elapsed_time = tp::Metric::ms{0};
-                WriteMetricToFile(metric);
+                awaiting_metrics_.insert({metric.id, metric});
             }
             else
             {
-                awaiting_metrics_.insert({metric.id, metric});
+                metric.elapsed_time = tp::Metric::ms{0};
+                WriteMetricToFile(metric);
             }
         }
 
@@ -171,9 +171,17 @@ void Orchestrator::MessageProcessing(std::vector<tp::RabbitClient::Message> mess
     }    
 }
 
+static std::filesystem::path dir = "results";
 void Orchestrator::WriteMetricToFile(const tp::Metric& metric)
 {
-    std::ofstream file("metric_id" + std::to_string(metric.id));
+    if (!std::filesystem::exists(dir))
+    {
+        std::filesystem::create_directory(dir);
+    }
+
+    std::filesystem::path filename = dir 
+                                        / std::filesystem::path(std::string("metric_id") + std::to_string(metric.id));
+    std::ofstream file(filename);
 
     if (file.is_open())
     {

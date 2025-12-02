@@ -37,7 +37,7 @@ int RabbitApp::Run()
             }
 
             MessageProcessing(messages);
-            ++responce_wait_count;
+            // ++responce_wait_count;
             // std::cout << "============end===================" << std::endl;
             // std::this_thread::sleep_for();
         }
