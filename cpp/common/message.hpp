@@ -3,6 +3,7 @@
 // std
 #include <string>
 #include <vector>
+#include <chrono>
 
 // nlohmann_json
 #include <nlohmann/json.hpp>
@@ -158,6 +159,27 @@ struct JobStatus
     int sections_count{};
     int received_sections{};
     std::vector<Result> sections_;
+};
+
+struct Metric
+{
+    using ms = std::chrono::milliseconds;
+    enum class Tag
+    {
+        START,
+        END,
+    };
+
+    Metric() = default;
+    Metric(int id, Tag tag, ms elapsed_time)
+        : id{id}, tag{tag}, elapsed_time{elapsed_time} {}
+
+    int id;
+    Tag tag;
+    std::chrono::milliseconds elapsed_time;
+
+    static json_type to_json(const Metric& metric);
+    static Metric from_json(const json_type& j_metric);
 };
 
 } // namespace tp

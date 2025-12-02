@@ -19,7 +19,7 @@ void Work::Run()
     work_result.succeeded = true;
     work_result.del_info = del_info_;
     work_result.result = processor.ProcessText();
-    
+
     std::cout << "Work ended: " << "id:" << work_result.result.id << "; section_id:" << work_result.result.section_id << std::endl;
     result_queue_.Push(std::move(work_result));
 }

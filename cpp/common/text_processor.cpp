@@ -51,7 +51,7 @@ Result TextProcessor::ProcessText()
 
     if (task_.option.sort_sentences)
     {
-        // text_stats.sorted_sentences = SortSentencesByLength(task_.data);
+        text_stats.sorted_sentences = SortSentencesByLength(task_.data);
     }
 
     std::string text_data = std::move(task_.data);
@@ -260,7 +260,7 @@ std::string TextProcessor::MaskNames(std::string_view text, std::string mask) co
     return result;
 }
 
-std::vector<std::string> TextProcessor::SortSentencesByLength(std::string_view text) const
+std::vector<std::string> TextProcessor::SortSentencesByLength(std::string text) const
 {
     std::vector<std::string> sentences;
 
@@ -272,7 +272,7 @@ std::vector<std::string> TextProcessor::SortSentencesByLength(std::string_view t
         unsigned char c = static_cast<unsigned char>(text[i]);
         if (IsSentenceEnd(c)) {
             std::size_t end = i + 1;
-            std::string_view raw = text.substr(start, end - start);
+            std::string raw = text.substr(start, end - start);
 
 
             std::size_t left = 0;
@@ -294,7 +294,7 @@ std::vector<std::string> TextProcessor::SortSentencesByLength(std::string_view t
     }
 
     if (start < n) {
-        std::string_view raw = text.substr(start);
+        std::string raw = text.substr(start);
         std::size_t left = 0;
         while (left < raw.size() &&
                std::isspace(static_cast<unsigned char>(raw[left]))) {
@@ -315,7 +315,7 @@ std::vector<std::string> TextProcessor::SortSentencesByLength(std::string_view t
                   if (a.size() != b.size()) {
                       return a.size() >= b.size();
                   }
-                  return a >= b;
+                  return a > b;
               });
 
     return sentences;

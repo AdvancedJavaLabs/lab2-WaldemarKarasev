@@ -21,13 +21,16 @@ protected:
     virtual void MessageProcessing(RabbitClient::Message mgs) = 0;
     virtual void MessageProcessing(std::vector<RabbitClient::Message> mgs) = 0;
 
+    static void StopApp() { s_is_running_ = false; }
 
 private:
-    bool stop_flag_ = false;
     std::string read_queue_name_;
     std::string write_queue_name_;
     RabbitClient client_;
     size_t prefetch_count_;
+
+private:
+    inline static bool s_is_running_ = true;
 };
 
 } // namespace tp

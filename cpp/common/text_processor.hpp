@@ -30,7 +30,7 @@ private:
 
     std::string MaskNames(std::string_view text, std::string mask) const;
 
-    std::vector<std::string> SortSentencesByLength(std::string_view text) const;
+    std::vector<std::string> SortSentencesByLength(std::string text) const;
 
 private:
     static bool IsWordChar(unsigned char c);

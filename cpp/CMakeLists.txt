@@ -33,4 +33,12 @@ add_executable(aggregator
 target_include_directories(aggregator PUBLIC ${CMAKE_SOURCE_DIR})
 target_link_libraries(aggregator common-func)
 
+add_executable(orchestrator
+    orchestrator/main.cpp
+    orchestrator/orchestrator.cpp
+)
+target_include_directories(orchestrator PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(orchestrator common-func)
+
+
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

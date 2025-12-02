@@ -268,12 +268,6 @@ Result Result::merge(const std::vector<Result>& sections)
         total.modified_text += r.text_analysis_result.modified_text;
     }
 
-    struct SentenceEntry
-    {
-        const std::vector<std::string>* sentences;
-        std::size_t index = 0;
-    };
-
     struct HeapNode
     {
         std::size_t len;
@@ -281,38 +275,30 @@ Result Result::merge(const std::vector<Result>& sections)
         std::size_t pos;     
     };
 
-    auto cmp = [](const HeapNode& a, const HeapNode& b) {
-        if (a.len != b.len)
-            return a.len <= b.len;     
-        return a.src_idx <= b.src_idx;  
+    auto cmp = [](const std::string& left, const std::string& right){
+        if (left.size() != right.size()) {
+            return left.size() < right.size();
+        }
+        return left <= right;
     };
 
-    std::priority_queue<HeapNode, std::vector<HeapNode>, decltype(cmp)> heap(cmp);
-
+    std::priority_queue<std::string, std::vector<std::string>, decltype(cmp)> heap(cmp);
     for (std::size_t i = 0; i < sections.size(); ++i)
     {
         const auto& vec = sections[i].text_analysis_result.sorted_sentences;
-        if (!vec.empty())
+        for (const auto& s : vec)
         {
-            heap.push(HeapNode{vec[0].size(), i, 0});
+            heap.push(s);
         }
     }
 
     std::vector<std::string> merged_sentences;
     while (!heap.empty())
     {
-        HeapNode node = heap.top();
+        std::string node = heap.top();
         heap.pop();
 
-        const auto& src = sections[node.src_idx]
-                              .text_analysis_result.sorted_sentences;
-        merged_sentences.push_back(src[node.pos]);
-
-        std::size_t next_pos = node.pos + 1;
-        if (next_pos < src.size())
-        {
-            heap.push(HeapNode{src[next_pos].size(), node.src_idx, next_pos});
-        }
+        merged_sentences.push_back(node);
     }
 
     total.sorted_sentences = std::move(merged_sentences);
@@ -350,6 +336,37 @@ Result Result::from_json(const nlohmann::json& j_result)
     result.text_analysis_result = TextAnalysisResult::from_json(j_result["stats"]);
 
     return result;
+}
+
+
+json_type Metric::to_json(const Metric& metric)
+{
+    json_type j_metric;
+
+    j_metric["id"] = metric.id;
+    j_metric["tag"] = metric.tag == Tag::START ? "START" : "END";
+    j_metric["time"] = metric.elapsed_time.count();
+
+    return j_metric;
+}
+
+Metric Metric::from_json(const json_type& j_metric)
+{
+    int id = j_metric["id"];
+
+    Tag tag;
+    if (j_metric["tag"] == "START")
+    {
+        tag = Tag::START;
+    }
+    else
+    {
+        tag = Tag::END;
+    }
+    int time = j_metric["time"];
+
+
+    return Metric{id, tag, ms{time}};
 }
 
 

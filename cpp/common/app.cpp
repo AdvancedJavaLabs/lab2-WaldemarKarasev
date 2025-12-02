@@ -6,8 +6,7 @@
 namespace tp {
     
 RabbitApp::RabbitApp(size_t prefetch_count, std::string read_queue, std::string write_queue)
-    : stop_flag_{false}
-    , read_queue_name_{std::move(read_queue)}
+    : read_queue_name_{std::move(read_queue)}
     , write_queue_name_{std::move(write_queue)}
     , prefetch_count_{prefetch_count} {}
 
@@ -18,24 +17,28 @@ int RabbitApp::Run()
     {   
         int responce_wait_count = 0;
         std::string consumer_tag = client_.Subscribe(read_queue_name_, prefetch_count_);
-        while (!stop_flag_)
+        while (s_is_running_)
         {
-            // std::cout << "===============================" << std::endl
+            // std::cout << "============start===================" << std::endl;
             auto messages = client_.ConsumeBatch(consumer_tag, std::thread::hardware_concurrency() * 2);
             if (messages.empty() || responce_wait_count > 20)
             {
                 ResultProcessing(client_);
-                std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 
                 // resetting wait count
-                if (responce_wait_count > 40)
+                if (responce_wait_count >= 20)
                 {
                     responce_wait_count = 0;
                 }
+
+                // std::cout << "responce_wait_count=" << responce_wait_count << std::endl;
                 continue;
             }
 
             MessageProcessing(messages);
+            ++responce_wait_count;
+            // std::cout << "============end===================" << std::endl;
             // std::this_thread::sleep_for();
         }
     }

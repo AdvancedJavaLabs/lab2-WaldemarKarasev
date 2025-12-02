@@ -1,18 +1,30 @@
 {
-    "id" : 0,
-    "section_id" : 1,
-    "result" : {
-        "word_count" : 10,
-        "top_words" : [
+    "id": 1764024620,
+    "section_id": -1,
+    "sections_count": 1106,
+    "file": "Shakespeare.txt",
+    "stats": {
+        "word_count": 988445,
+        "top_words": [
             {
-                "word" : "hello",
-                "count" : 10
+                "count": 25458,
+                "word": "the"
             },
             {
-                "word" : "world",
-                "count" : 2
+                "count": 21961,
+                "word": "and"
+            },
+            {
+                "count": 14926,
+                "word": "i"
             }
-        ]
-    },
-    "data" : "Text data"
+        ],
+        "sentiment": {
+            "score": 2841,
+            "positive_count": 2976,
+            "negative_count": 135,
+            "lable": "Positive"
+        },
+        "sorted_sentences": []
+    }
 }

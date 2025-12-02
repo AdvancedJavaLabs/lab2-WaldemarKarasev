@@ -1,0 +1,51 @@
+{
+    "id": 1764061220,
+    "section_id": -1,
+    "sections_count": 4,
+    "file": "text.txt",
+    "stats": {
+        "word_count": 999,
+        "top_words": [
+            {
+                "count": 1,
+                "word": "line220"
+            },
+            {
+                "count": 1,
+                "word": "line582"
+            },
+            {
+                "count": 1,
+                "word": "line63"
+            }
+        ],
+        "sentiment": {
+            "score": 0,
+            "positive_count": 0,
+            "negative_count": 0,
+            "lable": "Neutral"
+        },
+        "sorted_sentences": [
+            "line828\nline829\nline830\nline831\nline832\nline833\nline834\nline835\nline836\nline837\nline838\nline839\nline840\nline841\nline842\nline843\nline844\nline845\nline846\nline847\nline848\nline849\nline850\nline851\nline852\nline853\nline854\nline855\nline856\nline857\nline858\nline859\nline860\nline861\nline862\nline863\nline864\nline865\nline866\nline867\nline868\nline869\nline870\nline871\nline872\nline873\nline874\nline875\nline876\nline877\nline878\nline879\nline880\nline881\nline882\nline883\nline884\nline885\nline886\nline887\nline888\nline889\nline890\nline891\nline892\nline893\nline894\nline895\nline896\nline897\nline898\nline899\nline900\nline901\nline902\nline903\nline904\nline905\nline906\nline907\nline908\nline909\nline910\nline911\nline912\nline913\nline914\nline915\nline916\nline917\nline918\nline919\nline920\nline921\nline922\nline923\nline924\nline925\nline926\nline927\nline928\nline929\nline930\nline931\nline932\nline933\nline934\nline935\nline936\nline937\nline938\nline939\nline940\nline941\nline942.",
+            "line441\nline442\nline443\nline444\nline445\nline446\nline447\nline448\nline449\nline450\nline451\nline452\nline453\nline454\nline455\nline456\nline457\nline458\nline459\nline460\nline461\nline462\nline463\nline464\nline465\nline466\nline467\nline468\nline469\nline470\nline471\nline472\nline473\nline474\nline475\nline476\nline477\nline478\nline479\nline480\nline481\nline482\nline483\nline484\nline485\nline486\nline487\nline488\nline489\nline490\nline491\nline492\nline493\nline494\nline495\nline496\nline497\nline498\nline499\nline500\nline501\nline502\nline503\nline504\nline505\nline506\nline507\nline508\nline509\nline510\nline511\nline512\nline513\nline514\nline515\nline516\nline517\nline518\nline519\nline520\nline521\nline522\nline523\nline524\nline525\nline526\nline527\nline528\nline529\nline530\nline531\nline532\nline533\nline534\nline535\nline536\nline537.",
+            "line71\nline72\nline73\nline74\nline75\nline76\nline77\nline78\nline79\nline80\nline81\nline82\nline83\nline84\nline85\nline86\nline87\nline88\nline89\nline90\nline91\nline92\nline93\nline94\nline95\nline96\nline97\nline98\nline99\nline100\nline101\nline102\nline103\nline104\nline105\nline106\nline107\nline108\nline109\nline110\nline111\nline112\nline113\nline114\nline115\nline116\nline117\nline118\nline119\nline120\nline121\nline122\nline123\nline124\nline125\nline126\nline127\nline128\nline129\nline130\nline131\nline132\nline133\nline134\nline135\nline136\nline137\nline138\nline139.",
+            "line766\nline767\nline768\nline769\nline770\nline771\nline772\nline773\nline774\nline775\nline776\nline777\nline778\nline779\nline780\nline781\nline782\nline783\nline784\nline785\nline786\nline787\nline788\nline789\nline790\nline791\nline792\nline793\nline794\nline795\nline796\nline797\nline798\nline799\nline800\nline801\nline802\nline803\nline804\nline805\nline806\nline807\nline808\nline809\nline810\nline811\nline812\nline813\nline814\nline815\nline816\nline817\nline818\nline819\nline820\nline821\nline822\nline823\nline824\nline825\nline826\nline827.",
+            "line708\nline709\nline710\nline711\nline712\nline713\nline714\nline715\nline716\nline717\nline718\nline719\nline720\nline721\nline722\nline723\nline724\nline725\nline726\nline727\nline728\nline729\nline730\nline731\nline732\nline733\nline734\nline735\nline736\nline737\nline738\nline739\nline740\nline741\nline742\nline743\nline744\nline745\nline746\nline747\nline748\nline749\nline750\nline751\nline752\nline753\nline754\nline755\nline756\nline757\nline758\nline759\nline760\nline761\nline762\nline763\nline764\nline765.",
+            "line203\nline204\nline205\nline206\nline207\nline208\nline209\nline210\nline211\nline212\nline213\nline214\nline215\nline216\nline217\nline218\nline219\nline220\nline221\nline222\nline223\nline224\nline225\nline226\nline227\nline228\nline229\nline230\nline231\nline232\nline233\nline234\nline235\nline236\nline237\nline238\nline239\nline240\nline241\nline242\nline243\nline244\nline245\nline246\nline247\nline248\nline249\nline250\nline251\nline252\nline253\nline254\nline255\nline256\nline257.",
+            "line11\nline12\nline13\nline14\nline15\nline16\nline17\nline18\nline19\nline20\nline21\nline22\nline23\nline24\nline25\nline26\nline27\nline28\nline29\nline30\nline31\nline32\nline33\nline34\nline35\nline36\nline37\nline38\nline39\nline40\nline41\nline42\nline43\nline44\nline45\nline46\nline47\nline48\nline49\nline50\nline51\nline52\nline53\nline54\nline55\nline56\nline57\nline58\nline59\nline60\nline61\nline62\nline63\nline64\nline65\nline66\nline67\nline68\nline69\nline70.",
+            "line305\nline306\nline307\nline308\nline309\nline310\nline311\nline312\nline313\nline314\nline315\nline316\nline317\nline318\nline319\nline320\nline321\nline322\nline323\nline324\nline325\nline326\nline327\nline328\nline329\nline330\nline331\nline332\nline333\nline334\nline335\nline336\nline337\nline338\nline339\nline340\nline341\nline342\nline343\nline344\nline345\nline346\nline347\nline348\nline349\nline350\nline351\nline352\nline353\nline354\nline355\nline356.",
+            "line357\nline358\nline359\nline360\nline361\nline362\nline363\nline364\nline365\nline366\nline367\nline368\nline369\nline370\nline371\nline372\nline373\nline374\nline375\nline376\nline377\nline378\nline379\nline380\nline381\nline382\nline383\nline384\nline385\nline386\nline387\nline388\nline389\nline390\nline391\nline392\nline393\nline394\nline395\nline396\nline397\nline398\nline399\nline400\nline401\nline402\nline403.",
+            "line258\nline259\nline260\nline261\nline262\nline263\nline264\nline265\nline266\nline267\nline268\nline269\nline270\nline271\nline272\nline273\nline274\nline275\nline276\nline277\nline278\nline279\nline280\nline281\nline282\nline283\nline284\nline285\nline286\nline287\nline288\nline289\nline290\nline291\nline292\nline293\nline294\nline295\nline296\nline297\nline298\nline299\nline300\nline301\nline302\nline303\nline304.",
+            "line662\nline663\nline664\nline665\nline666\nline667\nline668\nline669\nline670\nline671\nline672\nline673\nline674\nline675\nline676\nline677\nline678\nline679\nline680\nline681\nline682\nline683\nline684\nline685\nline686\nline687\nline688\nline689\nline690\nline691\nline692\nline693\nline694\nline695\nline696\nline697\nline698\nline699\nline700\nline701\nline702\nline703\nline704\nline705\nline706\nline707.",
+            "line616\nline617\nline618\nline619\nline620\nline621\nline622\nline623\nline624\nline625\nline626\nline627\nline628\nline629\nline630\nline631\nline632\nline633\nline634\nline635\nline636\nline637\nline638\nline639\nline640\nline641\nline642\nline643\nline644\nline645\nline646\nline647\nline648\nline649\nline650\nline651\nline652\nline653\nline654\nline655\nline656\nline657\nline658\nline659\nline660\nline661.",
+            "line538\nline539\nline540\nline541\nline542\nline543\nline544\nline545\nline546\nline547\nline548\nline549\nline550\nline551\nline552\nline553\nline554\nline555\nline556\nline557\nline558\nline559\nline560\nline561\nline562\nline563\nline564\nline565\nline566\nline567\nline568\nline569\nline570\nline571\nline572\nline573\nline574\nline575\nline576\nline577\nline578\nline579.",
+            "line163\nline164\nline165\nline166\nline167\nline168\nline169\nline170\nline171\nline172\nline173\nline174\nline175\nline176\nline177\nline178\nline179\nline180\nline181\nline182\nline183\nline184\nline185\nline186\nline187\nline188\nline189\nline190\nline191\nline192\nline193\nline194\nline195\nline196\nline197\nline198\nline199\nline200\nline201\nline202.",
+            "line404\nline405\nline406\nline407\nline408\nline409\nline410\nline411\nline412\nline413\nline414\nline415\nline416\nline417\nline418\nline419\nline420\nline421\nline422\nline423\nline424\nline425\nline426\nline427\nline428\nline429\nline430\nline431\nline432\nline433\nline434\nline435\nline436\nline437\nline438\nline439\nline440.",
+            "line580\nline581\nline582\nline583\nline584\nline585\nline586\nline587\nline588\nline589\nline590\nline591\nline592\nline593\nline594\nline595\nline596\nline597\nline598\nline599\nline600\nline601\nline602\nline603\nline604\nline605\nline606\nline607\nline608\nline609\nline610\nline611\nline612\nline613\nline614\nline615.",
+            "line943\nline944\nline945\nline946\nline947\nline948\nline949\nline950\nline951\nline952\nline953\nline954\nline955\nline956\nline957\nline958\nline959\nline960\nline961\nline962\nline963\nline964\nline965\nline966\nline967\nline968\nline969\nline970\nline971.",
+            "line972\nline973\nline974\nline975\nline976\nline977\nline978\nline979\nline980\nline981\nline982\nline983\nline984\nline985\nline986\nline987\nline988\nline989\nline990\nline991\nline992\nline993\nline994\nline995\nline996\nline997\nline998\nline999.",
+            "line140\nline141\nline142\nline143\nline144\nline145\nline146\nline147\nline148\nline149\nline150\nline151\nline152\nline153\nline154\nline155\nline156\nline157\nline158\nline159\nline160\nline161\nline162.",
+            "line1\nline2\nline3\nline4\nline5\nline6\nline7\nline8\nline9\nline10."
+        ]
+    }
+}

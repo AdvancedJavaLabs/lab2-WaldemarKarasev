@@ -191,10 +191,15 @@ JobFactory::jobs_type JobFactory::SeparateSentences(int job_id
     // setting up sections count for each job
     std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
     int size = jobs.size();
+    // bool flag = true;
     for (auto& job : jobs)
     {
         job.sections_count = size;
-        // std::cout << tp::Task::to_json(job).dump(4) << std::endl;
+        // if (flag)
+        // {
+        //     std::cout << tp::Task::to_json(job).dump(4) << std::endl;
+        //     flag = false;
+        // }
     }
 
     return jobs;

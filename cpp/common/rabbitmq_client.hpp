@@ -58,6 +58,7 @@ public:
     static std::string GetTaskQueueName() { return "task_queue"; }
     static std::string GetResultQueueName() { return "result_queue"; }
     static std::string GetAggregatorQueueName() { return "agregator_queue"; }
+    static std::string GetMetricQueueName() { return "metric_queue"; }
 
 private:
     AmqpClient::Channel::ptr_t channel_;

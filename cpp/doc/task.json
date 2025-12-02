@@ -1,10 +1,16 @@
 {
-    "id" : 0,
-    "section_id" : 1,
-    "data" : "Text example",
-    "option" : {
-        "w_count" : true,
-        "top" : true,
-        "top_n" : 3
+    "id": 1764060032,
+    "section_id": 0,
+    "sections_count": 1106,
+    "file": "Shakespeare.txt",
+    "data": "text",
+    "option": {
+        "w_count": true,
+        "top": true,
+        "top_n": 3,
+        "sentiment": true,
+        "modify_text": true,
+        "mask": "line",
+        "sort_sentences": true
     }
 }

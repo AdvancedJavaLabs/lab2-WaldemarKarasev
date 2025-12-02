@@ -63,6 +63,23 @@ void JobReporter::Run()
     {
         std::cout << "modified text is empty" << std::endl;
     }
+
+    // if (!result_.text_analysis_result.sorted_sentences.empty())
+    // {
+    //     std::filesystem::path filename = dir / std::filesystem::path(result_.filename + ".sorted");
+    //     std::ofstream file(filename);
+    //     if (file.is_open())
+    //     {
+    //         for (const auto& sentence : result_.text_analysis_result.sorted_sentences)
+    //         {
+    //             file << sentence << std::endl;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         std::cout << "failed to open: " << filename.string() << std::endl;
+    //     }
+    // }
 }
 
 

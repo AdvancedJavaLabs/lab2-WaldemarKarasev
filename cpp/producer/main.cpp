@@ -35,6 +35,15 @@ int main(int argc, char const *argv[])
         tp::RabbitClient client("localhost");
 
         std::cout << "Started sending jobs:" << jobs.size() << " to the task queue" << std::endl;
+
+        // writing a start into queue for orchestrator
+        tp::Metric start_metric{
+            jobs.front().id
+            , tp::Metric::Tag::START
+            ,std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+        };
+        client.PublishToQueue(tp::RabbitClient::GetMetricQueueName(), tp::Metric::to_json(start_metric));
+
         for (const auto& job : jobs)
         {
             client.PublishToQueue(tp::RabbitClient::GetTaskQueueName(), tp::Task::to_json(job));
