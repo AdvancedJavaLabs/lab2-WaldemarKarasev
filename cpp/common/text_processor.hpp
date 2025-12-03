@@ -28,7 +28,7 @@ private:
 
     SentimentStats ComputeSentiment(std::string_view text) const;
 
-    std::string MaskNames(std::string_view text, std::string mask) const;
+    std::string MaskNames(std::string text, std::string mask) const;
 
     std::vector<std::string> SortSentencesByLength(std::string text) const;
 

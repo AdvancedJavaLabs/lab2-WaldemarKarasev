@@ -179,8 +179,7 @@ void Orchestrator::WriteMetricToFile(const tp::Metric& metric)
         std::filesystem::create_directory(dir);
     }
 
-    std::filesystem::path filename = dir 
-                                        / std::filesystem::path(std::string("metric_id") + std::to_string(metric.id));
+    std::filesystem::path filename = dir / std::filesystem::path(std::string("metric_id") + std::to_string(metric.id));
     std::ofstream file(filename);
 
     if (file.is_open())

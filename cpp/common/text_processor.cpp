@@ -46,7 +46,7 @@ Result TextProcessor::ProcessText()
 
     if (task_.option.modify_text)
     {
-        // text_stats.modified_text = MaskNames(task_.data, task_.option.mask);
+        text_stats.modified_text = MaskNames(task_.data, task_.option.mask);
     }
 
     if (task_.option.sort_sentences)
@@ -204,7 +204,7 @@ SentimentStats TextProcessor::ComputeSentiment(std::string_view text) const
     return stats;
 }
 
-std::string TextProcessor::MaskNames(std::string_view text, std::string mask) const
+std::string TextProcessor::MaskNames(std::string text, std::string mask) const
 {
     std::string result;
     result.reserve(text.size());
@@ -214,12 +214,13 @@ std::string TextProcessor::MaskNames(std::string_view text, std::string mask) co
 
     bool in_sentence_start = true;
 
-    while (i < n) {
-        if (!IsWordChar(static_cast<unsigned char>(text[i]))) 
+    while (i < n) 
+    {
+        if (!IsWordChar(static_cast<unsigned char>(text[i])))
         {
-            unsigned char c = text[i];
+            unsigned char c = static_cast<unsigned char>(text[i]);
             result.push_back(static_cast<char>(c));
-            if (IsSentenceEnd(c)) 
+            if (IsSentenceEnd(c))
             {
                 in_sentence_start = true;
             }
@@ -228,30 +229,31 @@ std::string TextProcessor::MaskNames(std::string_view text, std::string mask) co
         }
 
         std::size_t start = i;
-        while (i < n && IsWordChar(static_cast<unsigned char>(text[i]))) 
+        while (i < n && IsWordChar(static_cast<unsigned char>(text[i])))
         {
             ++i;
         }
         std::size_t len = i - start;
-        std::string_view word = text.substr(start, len);
+
+        std::string_view word(text.data() + start, len);
 
         bool is_name = false;
-        if (!word.empty()) 
+        if (!word.empty())
         {
             unsigned char first = static_cast<unsigned char>(word[0]);
-            if (std::isalpha(first) && std::isupper(first) && !in_sentence_start) 
+            if (std::isalpha(first) && std::isupper(first) && !in_sentence_start)
             {
                 is_name = true;
             }
         }
 
-        if (is_name) 
+        if (is_name)
         {
             result.append(mask);
         }
-        else 
+        else
         {
-            result.append(word.begin(), word.end());
+            result.append(text, start, len);
         }
 
         in_sentence_start = false;
@@ -267,25 +269,26 @@ std::vector<std::string> TextProcessor::SortSentencesByLength(std::string text) 
     const std::size_t n = text.size();
     std::size_t start = 0;
 
-    for (std::size_t i = 0; i < n; ++i) 
+    for (std::size_t i = 0; i < n; ++i)
     {
         unsigned char c = static_cast<unsigned char>(text[i]);
-        if (IsSentenceEnd(c)) {
+        if (IsSentenceEnd(c)) 
+        {
             std::size_t end = i + 1;
             std::string raw = text.substr(start, end - start);
 
-
             std::size_t left = 0;
-            while (left < raw.size() &&
-                   std::isspace(static_cast<unsigned char>(raw[left]))) {
+            while (left < raw.size() && std::isspace(static_cast<unsigned char>(raw[left]))) 
+            {
                 ++left;
             }
             std::size_t right = raw.size();
-            while (right > left &&
-                   std::isspace(static_cast<unsigned char>(raw[right - 1]))) {
+            while (right > left && std::isspace(static_cast<unsigned char>(raw[right - 1]))) 
+            {
                 --right;
             }
-            if (right > left) {
+            if (right > left) 
+            {
                 sentences.emplace_back(raw.substr(left, right - left));
             }
 
@@ -293,29 +296,35 @@ std::vector<std::string> TextProcessor::SortSentencesByLength(std::string text) 
         }
     }
 
-    if (start < n) {
+    if (start < n) 
+    {
         std::string raw = text.substr(start);
         std::size_t left = 0;
-        while (left < raw.size() &&
-               std::isspace(static_cast<unsigned char>(raw[left]))) {
+        while (left < raw.size() && std::isspace(static_cast<unsigned char>(raw[left]))) 
+        {
             ++left;
         }
         std::size_t right = raw.size();
-        while (right > left &&
-               std::isspace(static_cast<unsigned char>(raw[right - 1]))) {
+        while (right > left && std::isspace(static_cast<unsigned char>(raw[right - 1]))) 
+        {
             --right;
         }
-        if (right > left) {
+        if (right > left) 
+        {
             sentences.emplace_back(raw.substr(left, right - left));
         }
     }
 
     std::sort(sentences.begin(), sentences.end(),
-              [](const std::string& a, const std::string& b) {
-                  if (a.size() != b.size()) {
-                      return a.size() >= b.size();
+              [this](const std::string& a, const std::string& b) {
+                  std::size_t wa = CountWords(a);
+                  std::size_t wb = CountWords(b);
+
+                  if (wa != wb) 
+                  {
+                    return wa >= wb;
                   }
-                  return a > b;
+                  return a > b;       
               });
 
     return sentences;
@@ -332,3 +341,4 @@ bool TextProcessor::IsSentenceEnd(unsigned char c)
 }
 
 } // namespace tp
+
