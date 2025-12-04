@@ -346,7 +346,8 @@ json_type Metric::to_json(const Metric& metric)
     j_metric["id"] = metric.id;
     j_metric["tag"] = metric.tag == Tag::START ? "START" : "END";
     j_metric["time"] = metric.elapsed_time.count();
-
+    j_metric["file"] = metric.file;
+    j_metric["size"] = metric.size;
     return j_metric;
 }
 
@@ -365,8 +366,10 @@ Metric Metric::from_json(const json_type& j_metric)
     }
     int time = j_metric["time"];
 
+    std::string file = j_metric["file"];
+    size_t size  = j_metric["size"];
 
-    return Metric{id, tag, ms{time}};
+    return Metric{id, tag, ms{time}, file, size};
 }
 
 

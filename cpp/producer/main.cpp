@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
         if (argc < 4)
         {
 
-            std::cout << "Usage: " << argv[0] << "<config> <filename> <chunk_size>" << std::endl;
+            std::cout << "Usage: " << argv[0] << " <config> <filename> <chunk_size>" << std::endl;
             return 1;
         }
 
@@ -41,6 +41,8 @@ int main(int argc, char const *argv[])
             jobs.front().id
             , tp::Metric::Tag::START
             ,std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+            , file.filename().string()
+            , static_cast<size_t>(std::filesystem::file_size(file))
         };
         client.PublishToQueue(tp::RabbitClient::GetMetricQueueName(), tp::Metric::to_json(start_metric));
 

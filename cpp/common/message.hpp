@@ -171,12 +171,14 @@ struct Metric
     };
 
     Metric() = default;
-    Metric(int id, Tag tag, ms elapsed_time)
-        : id{id}, tag{tag}, elapsed_time{elapsed_time} {}
+    Metric(int id, Tag tag, ms elapsed_time, std::string file, size_t size)
+        : id{id}, tag{tag}, elapsed_time{elapsed_time} , file{std::move(file)}, size{size} {}
 
     int id;
     Tag tag;
     std::chrono::milliseconds elapsed_time;
+    std::string file;
+    size_t size;
 
     static json_type to_json(const Metric& metric);
     static Metric from_json(const json_type& j_metric);

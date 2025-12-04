@@ -149,6 +149,8 @@ void Orchestrator::MessageProcessing(std::vector<tp::RabbitClient::Message> mess
             auto it = awaiting_metrics_[metric.id];
 
             metric.elapsed_time -= it.elapsed_time;
+            metric.file = it.file;
+            metric.size = it.size;
             
             WriteMetricToFile(metric);
             
@@ -179,12 +181,14 @@ void Orchestrator::WriteMetricToFile(const tp::Metric& metric)
         std::filesystem::create_directory(dir);
     }
 
-    std::filesystem::path filename = dir / std::filesystem::path(std::string("metric_id") + std::to_string(metric.id));
+    std::filesystem::path filename = dir / std::filesystem::path(std::string("metric_id") + std::to_string(metric.id) + "_w_" + std::to_string(workers_));
     std::ofstream file(filename);
 
     if (file.is_open())
     {
-        file << tp::Metric::to_json(metric) << std::flush;
+        auto j = tp::Metric::to_json(metric);
+        j["workers"] = workers_;
+        file << j.dump(4) << std::flush;
     }
 
 }
