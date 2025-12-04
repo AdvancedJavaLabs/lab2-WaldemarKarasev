@@ -1,0 +1,30 @@
+{
+    "id": 1764024620,
+    "section_id": -1,
+    "sections_count": 1106,
+    "file": "Shakespeare.txt",
+    "stats": {
+        "word_count": 988445,
+        "top_words": [
+            {
+                "count": 25458,
+                "word": "the"
+            },
+            {
+                "count": 21961,
+                "word": "and"
+            },
+            {
+                "count": 14926,
+                "word": "i"
+            }
+        ],
+        "sentiment": {
+            "score": 2841,
+            "positive_count": 2976,
+            "negative_count": 135,
+            "lable": "Positive"
+        },
+        "sorted_sentences": []
+    }
+}
